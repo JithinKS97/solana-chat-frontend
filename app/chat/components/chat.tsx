@@ -18,8 +18,13 @@ export const Chat = () => {
             console.log('connected');
         });
 
+        socket.on('message', (message: string) => {
+            console.log('message', message);
+        });
+
         return () => {
             socket.off('connect');
+            socket.off('message');
         }
     }, []);
 
