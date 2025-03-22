@@ -4,6 +4,7 @@ import {useState} from 'react';
 import {useLoginWithEmail} from '@privy-io/react-auth';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { toast } from "sonner";
 
 export default function LoginWithEmail() {
   const [email, setEmail] = useState('');
@@ -18,6 +19,8 @@ export default function LoginWithEmail() {
     try {
       await sendCode({email});
       setIsCodeSent(true);
+    } catch (error) {
+      toast.error("Error sending code");
     } finally {
       setIsSendingCode(false);
     }
@@ -27,6 +30,8 @@ export default function LoginWithEmail() {
     setIsLoggingIn(true);
     try {
       await loginWithCode({code});
+    } catch (error) {
+      toast.error("Login failed");
     } finally {
       setIsLoggingIn(false);
     }
